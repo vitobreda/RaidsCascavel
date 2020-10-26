@@ -45,8 +45,7 @@ export const ContainerFacebookButtom = styled.TouchableOpacity`
 export const TextFacebookButtom = styled.Text`
   font-size: 16px;
   font-family: Roboto-Bold;
-  color: #303030;
-  text-transform: capitalize;
+  color: #303030;  
 `;
 
 

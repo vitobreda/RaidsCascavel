@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {Image} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import RaidsTextInput from '../Components/RaidsTextInput';
 import RaidsButtom from '../Components/RaidsButtom';
@@ -15,7 +16,9 @@ export default function Login() {
   }, [user, password]);
 
 
-  function login(user, password) {
+  function login() {
+    console.log('user: ', user)
+    console.log('password: ', password)
     auth().signInWithEmailAndPassword(user, password)
       .then((success) => {
         setUser(success.user)
@@ -63,29 +66,51 @@ export default function Login() {
 
 
   return (
-    <S.PageDefault>
-      <RaidsTextInput
-        placeholder="Email"
-        textValue={user}
-        onChangeText={(value) => setUser(value)}
-      >
-      </RaidsTextInput>
-      <RaidsTextInput
-        placeholder="Password"
-        secureTextEntry={true}
-        textValue={password}
-        onChangeText={(value) => setPassword(value.newValue)}
-      >
-      </RaidsTextInput>
-      
+    <S.PageDefault>            
+      <S.WrapperContent> 
+      <Image
+        style={{ 
+          width: 300, 
+          height: 150, 
+          alignSelf: "center", 
+          marginTop: '-10%', 
+          marginBottom: '10%'
+        }}
+        source={require('../Assets/Logo.png')}
+      />     
+        <S.ComponentWrapper>
+          <RaidsTextInput
+            placeholder="Email"
+            textValue={user}
+            onChangeText={(value) => setUser(value)}
+          />
+        </S.ComponentWrapper>
 
-      <RaidsButtom textValue="Continuar" />
+        <S.ComponentWrapper>
+          <RaidsTextInput
+            placeholder="Password"
+            secureTextEntry={true}
+            textValue={password}
+            onChangeText={(value) => setPassword(value)}
+          />
+        </S.ComponentWrapper>
 
-      <S.ContainerFacebookButtom
-        onPress={() => onFacebookButtonPress().then(() => console.log('Signed in with Facebook!'))}
-      >
-        <S.TextFacebookButtom>Logar com o Facebook</S.TextFacebookButtom>
-      </S.ContainerFacebookButtom>
+        <S.ComponentWrapper>
+          <RaidsButtom 
+          textValue="Continuar" 
+          onPres={() => login()}
+        />
+        </S.ComponentWrapper>
+
+        <S.ComponentWrapper>
+          <S.ContainerFacebookButtom
+            onPress={() => onFacebookButtonPress().then(() => console.log('Signed in with Facebook!'))}
+          >
+            <S.TextFacebookButtom>Logar com o Facebook</S.TextFacebookButtom>
+          </S.ContainerFacebookButtom>
+        </S.ComponentWrapper>
+
+      </S.WrapperContent>
     </S.PageDefault>
   );
 }
