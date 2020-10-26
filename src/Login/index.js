@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {Image} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import RaidsTextInput from '../Components/RaidsTextInput';
@@ -9,12 +9,6 @@ import * as S from './styles'
 export default function Login() {
   const [user, setUser] = useState();
   const [password, setPassword] = useState();
-
-  useEffect(() => {
-    //login('pokeminifu@gmail.com', 'mypassword')
-    //getFacebookToken();
-  }, [user, password]);
-
 
   function login() {
     console.log('user: ', user)
@@ -42,7 +36,6 @@ export default function Login() {
       .catch((err) => { console.log('ocorreu um erro ao tentar requisitar o token do facebook: ', err) })
   }
 
-
   async function onFacebookButtonPress() {
     // Attempt login with permissions
     LoginManager.logInWithPermissions(["public_profile"]).then(
@@ -57,7 +50,6 @@ export default function Login() {
         console.log("Login fail with error: " + error);
       }
     );
-
   }
 
   async function onFacebookLogout() {
