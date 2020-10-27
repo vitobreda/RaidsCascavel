@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {Image} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Alert, Image } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import RaidsTextInput from '../Components/RaidsTextInput';
 import RaidsButtom from '../Components/RaidsButtom';
@@ -9,18 +9,60 @@ import * as S from './styles'
 export default function Login() {
   const [user, setUser] = useState();
   const [password, setPassword] = useState();
+  const [token, setToken] = useState();
+
+  useEffect(() => {
+    //auth().signOut().then(() => console.log('user are logout')).catch((err) => console.log(err))
+
+    auth().onAuthStateChanged((authUser) => {
+      if (authUser) {
+        authUser.getIdToken()
+        .then((token) => { setToken(token) })
+        .catch((err) => {
+          Alert.alert(
+            "Falha ao solicitar o token",
+            err.message)
+        })
+      }
+    });
+  }, [])
+
+  useEffect(() => {
+    console.log('manteve a sessão com o token: ', token)
+  }, [token])
 
   function login() {
-    console.log('user: ', user)
-    console.log('password: ', password)
+    auth().face
+
     auth().signInWithEmailAndPassword(user, password)
       .then((success) => {
         setUser(success.user)
         success.user.getIdToken()
-          .then((token) => { console.log('token: ', token) })
-          .catch((err) => { console.log('ocorreu um erro ao solicitar o token: ', err) })
+          .then((token) => { setToken(token) })
+          .catch((err) => {
+            Alert.alert(
+              "Falha ao solicitar o token",
+              err.message)
+          })
       })
-      .catch((err) => { console.log('ocorreu um erro ao fazer login', err) })
+      .catch((err) => {
+        switch (err.code) {
+          case 'auth/wrong-password':
+            Alert.alert(
+              "Falha no login",
+              "Usuario ou senha invalidos")
+            break;
+          case 'auth/user-not-found':
+            Alert.alert(
+              "Falha no login",
+              "Nenhum usuario encontrado esse endereço de email")
+            break;
+          default:
+            Alert.alert(
+              "Falha no login",
+              "Ocorreu um erro ao tentar fazer o login")
+        }
+      })
   }
 
   function getFacebookToken() {
@@ -29,6 +71,11 @@ export default function Login() {
         (data) => {
           console.log('facebook data: ', data)
           if (data) {
+            const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+
+            // Sign-in the user with the credential
+            return auth().signInWithCredential(facebookCredential).then((value) => {console.log('firebase auth with facebook: ', value)}).catch((err) => {console.log(err)});
+            
             console.log('facebook token', data.accessToken)
             return data.accessToken;
           }
@@ -58,18 +105,18 @@ export default function Login() {
 
 
   return (
-    <S.PageDefault>            
-      <S.WrapperContent> 
-      <Image
-        style={{ 
-          width: 300, 
-          height: 150, 
-          alignSelf: "center", 
-          marginTop: '-10%', 
-          marginBottom: '10%'
-        }}
-        source={require('../Assets/Logo.png')}
-      />     
+    <S.PageDefault>
+      <S.WrapperContent>
+        <Image
+          style={{
+            width: 300,
+            height: 150,
+            alignSelf: "center",
+            marginTop: '-10%',
+            marginBottom: '10%'
+          }}
+          source={require('../Assets/Logo.png')}
+        />
         <S.ComponentWrapper>
           <RaidsTextInput
             placeholder="Email"
@@ -88,10 +135,10 @@ export default function Login() {
         </S.ComponentWrapper>
 
         <S.ComponentWrapper>
-          <RaidsButtom 
-          textValue="Continuar" 
-          onPres={() => login()}
-        />
+          <RaidsButtom
+            textValue="Continuar"
+            onPres={() => login()}
+          />
         </S.ComponentWrapper>
 
         <S.ComponentWrapper>
