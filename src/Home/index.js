@@ -21,10 +21,15 @@ export default function Home(props) {
   function Logout() {
     auth()
       .signOut()
-      .then(() => console.log('user are logout'))
-      .catch((err) => console.log(err));
-
-    props.navigation.navigate('Login');
+      .then(() => {
+        actions.setUser({
+          name: null,
+          token: null,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (

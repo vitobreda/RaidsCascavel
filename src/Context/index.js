@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 const initialState = {
   user: {
     name: 'Vito Odone',
+    token: null,
   },
 };
 

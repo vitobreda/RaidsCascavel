@@ -1,51 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Alert, Image } from 'react-native';
-import auth from '@react-native-firebase/auth';
 import RaidsTextInput from '../Components/RaidsTextInput';
 import RaidsButtom from '../Components/RaidsButtom';
+import auth from '@react-native-firebase/auth';
+import { StateContext } from '../Context';
+
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import * as S from './styles';
 
 export default function Login(props) {
   const [user, setUser] = useState();
   const [password, setPassword] = useState();
-  const [token, setToken] = useState();
-
-  useEffect(() => {
-    auth().onAuthStateChanged((authUser) => {
-      setUser(authUser);
-      if (authUser) {
-        getTokenFirebase(authUser);
-      }
-    });
-  }, []);
+  const { state, actions } = useContext(StateContext);
 
   function getTokenFirebase(authUser) {
+    setUser(authUser);
     authUser
       .getIdToken()
       .then((token) => {
-        setToken(token);
+        actions.setUser({
+          name: authUser.name,
+          token: token,
+        });
       })
       .catch((err) => {
         Alert.alert('Falha ao solicitar o token', err.message);
       });
   }
 
-  useEffect(() => {
-    props.navigation.navigate('Home');
-  }, [token]);
-
   function login() {
-    auth()
-      .signInWithEmailAndPassword(user, password)
-      .then((success) => {
-        setUser(success.user);
-
-        if (success.user) {
-          getTokenFirebase(success.user);
-        }
-      })
-      .catch((err) => handleErrorLoginFirebase(err));
+    if (!user) {
+      Alert.alert(
+        'Informações incompletas',
+        'Não foi informado um usuario',
+      );
+    } else if (!password) {
+      Alert.alert(
+        'Informações incompletas',
+        'Não foi informado uma senha',
+      );
+    } else {
+      auth()
+        .signInWithEmailAndPassword(user, password)
+        .then((success) => {
+          if (success.user) {
+            getTokenFirebase(success.user);
+          }
+        })
+        .catch((err) => handleErrorLoginFirebase(err));
+    }
   }
 
   function handleErrorLoginFirebase(error) {
@@ -154,6 +157,19 @@ export default function Login(props) {
             </S.TextFacebookButtom>
           </S.ContainerFacebookButtom>
         </S.ComponentWrapper>
+
+        <S.OptionsWrapper>
+          <S.TextOptions>Esqueceu sua senha?</S.TextOptions>
+        </S.OptionsWrapper>
+        <S.OptionsWrapper>
+          <S.TextOptions
+            onPress={() => {
+              props.navigation.navigate('Register');
+            }}
+          >
+            Ainda não possui uma conta? Cadastre-se!
+          </S.TextOptions>
+        </S.OptionsWrapper>
       </S.WrapperContent>
     </S.PageDefault>
   );
