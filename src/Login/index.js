@@ -12,7 +12,6 @@ export default function Login(props) {
   const [token, setToken] = useState();
 
   useEffect(() => {
-    //auth().signOut().then(() => console.log('user are logout')).catch((err) => console.log(err))
     auth().onAuthStateChanged((authUser) => {
       setUser(authUser);
       if (authUser) {
@@ -20,77 +19,6 @@ export default function Login(props) {
       }
     });
   }, []);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  ,
-  ,
-  11000000
 
   function getTokenFirebase(authUser) {
     authUser
