@@ -4,9 +4,9 @@ import Home from '../../Home';
 
 const Stack = createStackNavigator();
 
-export default function SignedOut(props) {
+export default function SignedIn(props) {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator>
       <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   );

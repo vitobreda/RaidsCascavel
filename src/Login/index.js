@@ -11,30 +11,67 @@ import * as S from './styles';
 export default function Login(props) {
   const [user, setUser] = useState();
   const [password, setPassword] = useState();
+  const [
+    buttonActivityIndicator,
+    setButtonActivityIndicator,
+  ] = useState(false);
   const { state, actions } = useContext(StateContext);
 
   function getTokenFirebase(authUser) {
-    setUser(authUser);
-    authUser
-      .getIdToken()
-      .then((token) => {
-        actions.setUser({
-          name: authUser.name,
-          token: token,
+    if (!authUser.emailVerified) {
+      Alert.alert(
+        'Cadastro incompleto',
+        'É necessario verificar o email para continuar',
+        [
+          {
+            text: 'Ok',
+            style: 'Ok',
+          },
+          {
+            text: 'Enviar novo email',
+            onPress: () =>
+              authUser
+                .sendEmailVerification()
+                .then(() => console.log('email enviado com sucesso'))
+                .catch((err) =>
+                  console.log(
+                    'ocorreu um erro ao enviar o email de verificação: ',
+                    err,
+                  ),
+                ),
+          },
+        ],
+        { cancelable: false },
+      );
+      auth().signOut();
+    } else {
+      setUser(authUser);
+
+      authUser
+        .getIdToken()
+        .then((token) => {
+          actions.setUser({
+            name: authUser.name,
+            token: token,
+          });
+        })
+        .catch((err) => {
+          setButtonActivityIndicator(false);
+          Alert.alert('Falha ao solicitar o token', err.message);
         });
-      })
-      .catch((err) => {
-        Alert.alert('Falha ao solicitar o token', err.message);
-      });
+    }
   }
 
   function login() {
+    setButtonActivityIndicator(true);
     if (!user) {
+      setButtonActivityIndicator(false);
       Alert.alert(
         'Informações incompletas',
         'Não foi informado um usuario',
       );
     } else if (!password) {
+      setButtonActivityIndicator(false);
       Alert.alert(
         'Informações incompletas',
         'Não foi informado uma senha',
@@ -52,6 +89,7 @@ export default function Login(props) {
   }
 
   function handleErrorLoginFirebase(error) {
+    setButtonActivityIndicator(false);
     switch (error.code) {
       case 'auth/wrong-password':
         Alert.alert('Falha no login', 'Usuario ou senha invalidos');
@@ -86,15 +124,20 @@ export default function Login(props) {
                 getTokenFirebase(value.user);
               }
             })
-            .catch((err) => handleErrorLoginFirebase(err));
+            .catch((err) => {
+              setButtonActivityIndicator(false);
+              handleErrorLoginFirebase(err);
+            });
         }
       })
       .catch((err) => {
+        setButtonActivityIndicator(false);
         Alert.alert('Erro ao logar com o facebook', err.message);
       });
   }
 
   async function onFacebookButtonPress() {
+    setButtonActivityIndicator(true);
     // Attempt login with permissions
     LoginManager.logInWithPermissions(['public_profile']).then(
       function (result) {
@@ -105,6 +148,7 @@ export default function Login(props) {
         }
       },
       function (error) {
+        setButtonActivityIndicator(false);
         console.log('Login fail with error: ' + error);
       },
     );
@@ -141,7 +185,11 @@ export default function Login(props) {
         </S.ComponentWrapper>
 
         <S.ComponentWrapper>
-          <RaidsButtom textValue="Continuar" onPres={() => login()} />
+          <RaidsButtom
+            textValue="Continuar"
+            onPres={() => login()}
+            showActivityIndicator={buttonActivityIndicator}
+          />
         </S.ComponentWrapper>
 
         <S.ComponentWrapper>

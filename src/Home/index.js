@@ -36,7 +36,7 @@ export default function Home(props) {
     <View>
       <Button title="Logout" onPress={() => Logout()} />
       <Button title="Atualizar status" onPress={() => clicl()} />
-      <Text>{state.user.name}</Text>
+      {state.user.name && <Text>{state.user.name}</Text>}
     </View>
   );
 }

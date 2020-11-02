@@ -5,7 +5,7 @@ import Register from '../../Register';
 
 const Stack = createStackNavigator();
 
-export default function SignedIn(props) {
+export default function SignedOut(props) {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={Login} />

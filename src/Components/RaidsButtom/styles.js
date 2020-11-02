@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import * as Default from '../../styles'
+import * as Default from '../../styles';
 
 export const Colors = Default.DefaultColors;
 
