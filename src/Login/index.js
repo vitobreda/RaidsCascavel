@@ -4,7 +4,6 @@ import RaidsTextInput from '../Components/RaidsTextInput';
 import RaidsButtom from '../Components/RaidsButtom';
 import auth from '@react-native-firebase/auth';
 import { StateContext } from '../Context';
-
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import * as S from './styles';
 
