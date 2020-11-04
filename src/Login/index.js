@@ -7,7 +7,7 @@ import * as Firebase from '../FirebaseFunctions';
 import * as S from './styles';
 
 export default function Login(props) {
-  const [user, setUser] = useState();
+  const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [
     buttonActivityIndicator,
@@ -31,8 +31,8 @@ export default function Login(props) {
         <S.ComponentWrapper>
           <RaidsTextInput
             placeholder="Email"
-            textValue={user}
-            onChangeText={(value) => setUser(value)}
+            textValue={email}
+            onChangeText={(value) => setEmail(value)}
           />
         </S.ComponentWrapper>
 
@@ -48,14 +48,21 @@ export default function Login(props) {
         <S.ComponentWrapper>
           <RaidsButtom
             textValue="Continuar"
-            onPres={() => Firebase.login(user, password)}
+            onPres={() => {
+              Firebase.login(email, password);
+            }}
             showActivityIndicator={buttonActivityIndicator}
           />
         </S.ComponentWrapper>
 
         <S.ComponentWrapper>
           <S.ContainerFacebookButtom
-            onPress={() => Firebase.onFacebookButtonPress()}
+            onPress={() => {
+              setButtonActivityIndicator(true);
+              Firebase.onFacebookButtonPress().catch((err) =>
+                setButtonActivityIndicator(false),
+              );
+            }}
           >
             <S.TextFacebookButtom>
               Logar com o Facebook
