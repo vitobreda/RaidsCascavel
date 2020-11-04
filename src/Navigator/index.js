@@ -20,8 +20,17 @@ export default function Navigator(props) {
             });
           })
           .catch((err) => {
+            actions.setUser({
+              name: null,
+              token: null,
+            });
             Alert.alert('Falha ao solicitar o token', err.message);
           });
+      } else {
+        actions.setUser({
+          name: null,
+          token: null,
+        });
       }
     });
   }, []);

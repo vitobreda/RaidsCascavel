@@ -1,9 +1,12 @@
 import React from 'react';
 import auth from '@react-native-firebase/auth';
-import { StateContext } from '../Context';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { customMessage } from '../Functions';
 import { Alert } from 'react-native';
+
+//TODO change functions to return default errors
+
+//TODO change functions to return user object
 
 function alertVerificarEmail(authUser) {
   return Alert.alert(
@@ -26,35 +29,27 @@ function alertVerificarEmail(authUser) {
 export function getTokenFirebase(authUser) {
   if (!authUser.emailVerified) {
     alertVerificarEmail(authUser);
+
     auth().signOut();
   } else {
-    setUser(authUser);
-
     authUser
       .getIdToken()
-      .then((token) => {
-        actions.setUser({
-          name: authUser.name,
-          token: token,
-        });
+      .then((token123) => {
+        console.log(token123);
       })
       .catch((err) => {
-        setButtonActivityIndicator(false);
         customMessage('Falha ao solicitar o token', err.message);
       });
   }
 }
 
-export function login() {
-  setButtonActivityIndicator(true);
+export function login(user, password) {
   if (!user) {
-    setButtonActivityIndicator(false);
     customMessage(
       'Informações incompletas',
       'Não foi informado um usuario',
     );
   } else if (!password) {
-    setButtonActivityIndicator(false);
     customMessage(
       'Informações incompletas',
       'Não foi informado uma senha',
@@ -67,12 +62,14 @@ export function login() {
           getTokenFirebase(success.user);
         }
       })
-      .catch((err) => handleErrorLoginFirebase(err));
+      .catch((err) => {
+        console.log('erro ao logar com usuario e senha: ', err);
+        handleErrorLoginFirebase(err);
+      });
   }
 }
 
 export function handleErrorLoginFirebase(error) {
-  setButtonActivityIndicator(false);
   switch (error.code) {
     case 'auth/wrong-password':
       customMessage('Falha no login', 'Usuario ou senha invalidos');
@@ -108,18 +105,33 @@ export function getFacebookToken() {
             }
           })
           .catch((err) => {
-            setButtonActivityIndicator(false);
+            console.log('erro token firebase', err);
             handleErrorLoginFirebase(err);
           });
       }
     })
     .catch((err) => {
-      setButtonActivityIndicator(false);
       customMessage('Erro ao logar com o facebook', err.message);
     });
 }
 
-export function registerNewUser() {
+export async function onFacebookButtonPress() {
+  // Attempt login with permissions
+  LoginManager.logInWithPermissions(['public_profile']).then(
+    function (result) {
+      if (result.isCancelled) {
+        console.log('Login cancelled');
+      } else {
+        return getFacebookToken();
+      }
+    },
+    function (error) {
+      console.log('Login fail with error: ' + error);
+    },
+  );
+}
+
+export function registerNewUser(email, password) {
   if (!email) {
     customMessage(
       'Email não foi informado',
