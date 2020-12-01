@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { View, Button, Text } from 'react-native';
-import { StateContext } from '../Context';
+import { StateContext } from '../../Commons/ContextApi';
 import auth from '@react-native-firebase/auth';
 
 export default function Home(props) {

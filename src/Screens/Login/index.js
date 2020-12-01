@@ -1,9 +1,7 @@
-import React, { useState, useContext } from 'react';
-import { Alert, Image } from 'react-native';
-import RaidsTextInput from '../Components/RaidsTextInput';
-import RaidsButtom from '../Components/RaidsButtom';
-import { StateContext } from '../Context';
-import * as Firebase from '../FirebaseFunctions';
+import React, { useState } from 'react';
+import RaidsTextInput from '../../Components/RaidsTextInput';
+import RaidsButtom from '../../Components/RaidsButtom';
+import * as Firebase from '../../Commons/Firebase';
 import * as S from './styles';
 
 export default function Login(props) {
@@ -13,21 +11,11 @@ export default function Login(props) {
     buttonActivityIndicator,
     setButtonActivityIndicator,
   ] = useState(false);
-  const { state, actions } = useContext(StateContext);
 
   return (
     <S.PageDefault>
       <S.WrapperContent>
-        <Image
-          style={{
-            width: 300,
-            height: 150,
-            alignSelf: 'center',
-            marginTop: '-10%',
-            marginBottom: '10%',
-          }}
-          source={require('../Assets/Logo.png')}
-        />
+        <S.Image source={require('../../Assets/Logo.png')} />
         <S.ComponentWrapper>
           <RaidsTextInput
             placeholder="Email"
@@ -57,10 +45,11 @@ export default function Login(props) {
 
         <S.ComponentWrapper>
           <S.ContainerFacebookButtom
-            onPress={() => {
+            onPress={async () => {
               setButtonActivityIndicator(true);
-              Firebase.onFacebookButtonPress().catch((err) =>
-                setButtonActivityIndicator(false),
+
+              await Firebase.onFacebookButtonPress().then((result) =>
+                setButtonActivityIndicator(!result.isCancelled),
               );
             }}
           >

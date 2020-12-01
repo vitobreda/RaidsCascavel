@@ -1,11 +1,19 @@
 import styled from 'styled-components/native';
-import * as Default from '../styles';
+import * as Default from '../../styles';
 
 export const PageDefault = styled(Default.PageDefault)``;
 
 export const ContainerFacebookButtom = styled(
   Default.ContainerFacebookButtom,
 )``;
+
+export const Image = styled.Image`
+  width: 300px;
+  height: 150px;
+  align-self: center;
+  margin-top: -10%;
+  margin-bottom: 10%;
+`;
 
 export const TextFacebookButtom = styled(
   Default.TextFacebookButtom,

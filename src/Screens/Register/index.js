@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
-import RaidsTextInput from '../Components/RaidsTextInput';
-import RaidsButtom from '../Components/RaidsButtom';
-import * as FirebaseFunctions from '../FirebaseFunctions';
+import RaidsTextInput from '../../Components/RaidsTextInput';
+import RaidsButtom from '../../Components/RaidsButtom';
+import * as FirebaseFunctions from '../../Commons/Firebase';
 import * as S from './styles';
 
 export default function Register(props) {

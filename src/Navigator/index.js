@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { StateContext } from '../Context';
-import * as FirebaseFunctions from '../FirebaseFunctions';
+import { StateContext } from '../Commons/ContextApi';
+import * as FirebaseFunctions from '../Commons/Firebase';
 import auth, { firebase } from '@react-native-firebase/auth';
 import SignedIn from './SignedIn';
 import SignedOut from './SignedOut';
