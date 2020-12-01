@@ -88,3 +88,18 @@ export function registerNewUser(email, password, passwordConfirm) {
       .catch(alert);
   }
 }
+
+export function recoveryPassword(email) {
+  if (!email) {
+    alert('informe um email valido!!');
+  } else {
+    auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        alert(
+          'Enviado o email para recuperacão de senha, caso o email não chegar dentre alguns minutos verifique a lixeira antes de realizar uma nova tentativa',
+        );
+      })
+      .catch(alert);
+  }
+}

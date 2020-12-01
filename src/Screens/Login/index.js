@@ -59,15 +59,19 @@ export default function Login(props) {
           </S.ContainerFacebookButtom>
         </S.ComponentWrapper>
 
-        <S.OptionsWrapper>
+        <S.OptionsWrapper
+          onPress={() => {
+            Firebase.recoveryPassword(email);
+          }}
+        >
           <S.TextOptions>Esqueceu sua senha?</S.TextOptions>
         </S.OptionsWrapper>
-        <S.OptionsWrapper>
-          <S.TextOptions
-            onPress={() => {
-              props.navigation.navigate('Register');
-            }}
-          >
+        <S.OptionsWrapper
+          onPress={() => {
+            props.navigation.navigate('Register');
+          }}
+        >
+          <S.TextOptions>
             Ainda não possui uma conta? Cadastre-se!
           </S.TextOptions>
         </S.OptionsWrapper>
