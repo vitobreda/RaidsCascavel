@@ -1,27 +1,21 @@
-import * as React from 'react';
-import { Context } from './src/Commons/ContextApi';
-import Navigator from './src/Navigator';
-import ErrorBoundary from './src/Commons/ErrorBoundary';
-import { ErrorHandler } from './src/Commons/ErrorHandler';
-import {
-  setJSExceptionHandler,
-  setNativeExceptionHandler,
-} from 'react-native-exception-handler';
+import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
-function App() {
-  setJSExceptionHandler(ErrorHandler, true);
-
-  setNativeExceptionHandler((errorString) => {
-    console.log('native error handler');
-  });
-
+export default function App() {
   return (
-    <ErrorBoundary>
-      <Context>
-        <Navigator />
-      </Context>
-    </ErrorBoundary>
+    <View style={styles.container}>
+      <Text>Open up App.js to start working on your app!</Text>
+      <StatusBar style="auto" />
+    </View>
   );
 }
 
-export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

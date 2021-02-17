@@ -1,4 +1,12 @@
 {
   "name": "RaidsCascavel",
-  "displayName": "RaidsCascavel"
+  "displayName": "RaidsCascavel",
+  "expo": {
+    "name": "RaidsCascavel",
+    "slug": "RaidsCascavel",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
 }
