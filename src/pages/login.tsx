@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, TextInput } from "react-native"
+import { Button, TouchableOpacity } from "react-native"
 import { onFacebookButtonPress } from "../commons/facebookLogin";
 import * as Styles from '../styles/login'
 
@@ -10,34 +10,46 @@ export default function Login() {
 
     return (
         <Styles.Container>
-            <TextInput
-                value={email}
-                onChangeText={text => setEmail(text)}
-                placeholder="Email"
-            />
+            <Styles.Logo>Raids Cascavel</Styles.Logo>
+            <Styles.InputView>
+                <Styles.InputText
+                    value={email}
+                    onChangeText={text => setEmail(text)}
+                    placeholder="Email..."
+                />
+            </Styles.InputView>
 
-            <TextInput
-                value={password}
-                onChangeText={text => setPassword(text)}
-                placeholder="Senha"
-            />
+            <Styles.InputView>
+                <Styles.InputText
+                    secureTextEntry
+                    value={password}
+                    onChangeText={text => setPassword(text)}
+                    placeholder="Senha..."
+                />
+            </Styles.InputView>
 
-            <Button
-                title="Login"
-                onPress={() => console.log('login')}
-            />
+            <TouchableOpacity>
+                <Styles.Forgot>Esqueceu a senha?</Styles.Forgot>
+            </TouchableOpacity>
+
+            <Styles.LoginBtn>
+                <Styles.LoginText>Entrar</Styles.LoginText>
+            </Styles.LoginBtn>
+
+            <Styles.FacebookBtn onPress={() => onFacebookButtonPress()
+                .then((data) => console.log("Signed in with Facebook!"))
+                .catch((error) => {
+                    console.log("ocorreu um erro ao tentar fazer login: ", error);
+                })}>
+                <Styles.LoginText>Facebook</Styles.LoginText>
+            </Styles.FacebookBtn>
 
 
-            <Button
-                title="Facebook Sign-In"
-                onPress={() =>
-                    onFacebookButtonPress()
-                        .then((data) => console.log("Signed in with Facebook!"))
-                        .catch((error) => {
-                            console.log("ocorreu um erro ao tentar fazer login: ", error);
-                        })
-                }
-            />
+
+            <TouchableOpacity>
+                <Styles.LoginText>Cadastrar</Styles.LoginText>
+            </TouchableOpacity>
+
         </Styles.Container>
     );
 }
