@@ -10,7 +10,7 @@ export const Container = styled(View)`
 
 export const Logo = styled(Text)`
     font-weight: bold;
-    font-size: 50px;
+    font-size: 40px;
     color: #7CAE7A;
     margin-bottom: 40px;
 `;

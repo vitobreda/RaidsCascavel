@@ -3,6 +3,7 @@ import { LoginManager, AccessToken } from "react-native-fbsdk";
 
 export async function onFacebookButtonPress() {
   // Attempt login with permissions
+
   const result = await LoginManager.logInWithPermissions([
     "public_profile",
     "email",
@@ -15,6 +16,7 @@ export async function onFacebookButtonPress() {
   // Once signed in, get the users AccesToken
   const data = await AccessToken.getCurrentAccessToken();
 
+  console.log('facebook access token: ', data)
   if (!data) {
     throw "Something went wrong obtaining access token";
   }

@@ -32,7 +32,9 @@ export default function Login() {
                 <Styles.Forgot>Esqueceu a senha?</Styles.Forgot>
             </TouchableOpacity>
 
-            <Styles.LoginBtn>
+            <Styles.LoginBtn onPress={() => {
+                fetch("http://192.168.1.10:3000/auth/facebook").then((value) => console.log('request succes', value)).catch((error) => { console.log('some error happerns: ', error) })
+            }}>
                 <Styles.LoginText>Entrar</Styles.LoginText>
             </Styles.LoginBtn>
 
