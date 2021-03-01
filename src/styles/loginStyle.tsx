@@ -33,7 +33,7 @@ export const InputText = styled(TextInput)`
 
 export const Forgot = styled(Text)`
     color: white;
-    font-size: 11;
+    font-size: 11px;
 `;
 
 export const LoginBtn = styled(TouchableOpacity)`
@@ -43,8 +43,8 @@ export const LoginBtn = styled(TouchableOpacity)`
     height: 50px;
     align-items: center;
     justify-content: center;
-    margin-top: 40;
-    margin-bottom: 10;
+    margin-top: 40px;
+    margin-bottom: 10px;
 `;
 
 export const FacebookBtn = styled(TouchableOpacity)`

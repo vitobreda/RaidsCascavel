@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import { Button, TouchableOpacity } from "react-native"
+import { TouchableOpacity } from "react-native"
 import { onFacebookButtonPress } from "../commons/facebookLogin";
-import * as Styles from '../styles/login'
+import auth from "@react-native-firebase/auth";
+import * as Styles from '../styles/loginStyle'
+import Navigation from '../navigation/signedIn';
 
 
-export default function Login() {
-    const [email, setEmail] = useState<string>();
-    const [password, setPassword] = useState<string>();
+export default function Login(props: any) {
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
 
     return (
         <Styles.Container>
@@ -33,7 +35,9 @@ export default function Login() {
             </TouchableOpacity>
 
             <Styles.LoginBtn onPress={() => {
-                fetch("http://192.168.1.10:3000/auth/facebook").then((value) => console.log('request succes', value)).catch((error) => { console.log('some error happerns: ', error) })
+                auth().signInWithEmailAndPassword(email, password).then(() => {
+                    console.log('signed in with email and password')
+                }).catch((error) => { console.log('something wrong when try to login with email and password: ', error) })
             }}>
                 <Styles.LoginText>Entrar</Styles.LoginText>
             </Styles.LoginBtn>
@@ -48,7 +52,9 @@ export default function Login() {
 
 
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+                props.navigation.navigate('Register')
+            }}>
                 <Styles.LoginText>Cadastrar</Styles.LoginText>
             </TouchableOpacity>
 
