@@ -1,18 +1,50 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { ScrollView } from 'react-native'
 import * as Styles from '../styles/registerStyle'
+import { StateContext } from '../commons/authContext'
+import axios from "axios";
 
-export default function FacebookRegister() {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
+export default function FacebookRegister(props: any) {
+  const [nickName, setNickName] = useState<string>('');
   const [level, setLevel] = useState<string>('');
   const [team, setTeam] = useState<string>('');
   const [friendCode, setFriendCode] = useState<string>('');
+  const { loginApi } = useContext(StateContext)
+
+  function createAppUser() {
+    console.log('try to create a new user', props)
+    let newUser = {
+      userName: nickName,
+      email: props.route.params.email,
+      firebaseId: props.route.params.firebaseId,
+      level: level,
+      team: team,
+      friendCode: friendCode
+    }
+
+    axios.post("http://192.168.1.11:3000/users/firebaseCreateUser", JSON.stringify(newUser), {
+      headers: { "Content-Type": 'application/json' }
+    }
+    )
+      .then((response) => {
+        loginApi(props.route.params.firebaseToken)
+      }).catch((error) => {
+        console.log('axios error: ', error.response.data);
+      });
+  }
 
   return (
     <Styles.Container>
       <ScrollView style={{ flex: 1 }}>
+
+        <Styles.InputView>
+          <Styles.InputText
+            value={nickName}
+            onChangeText={text => setNickName(text)}
+            placeholder='Nick name ....'
+          />
+        </Styles.InputView>
+
         <Styles.InputView>
           <Styles.InputText
             value={level}
@@ -37,7 +69,7 @@ export default function FacebookRegister() {
           />
         </Styles.InputView>
 
-        <Styles.Button>
+        <Styles.Button onPress={() => createAppUser()}>
           <Styles.ButtonText>Entrar</Styles.ButtonText>
         </Styles.Button>
       </ScrollView>

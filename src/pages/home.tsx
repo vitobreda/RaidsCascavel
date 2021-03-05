@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button } from "react-native";
-import auth from '@react-native-firebase/auth';
-import { LoginManager } from "react-native-fbsdk";
+import { StateContext } from '../commons/authContext'
 
 export default function Home() {
+    const { logOut } = useContext(StateContext)
+
     return (
         <Button title="Logout" onPress={async () => {
-            await LoginManager.logOut();
-            auth().signOut().then(() => console.log('user are logout')).catch((err) => console.log('some wrong happens when user are logedout'))
+            logOut();
         }} />
     )
 }

@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
-import { TouchableOpacity } from "react-native"
-import { onFacebookButtonPress } from "../commons/facebookLogin";
-import auth from "@react-native-firebase/auth";
+import React, { useContext, useState } from 'react'
+import { TouchableOpacity, Alert } from "react-native"
 import * as Styles from '../styles/loginStyle'
-import Navigation from '../navigation/signedIn';
+import { StateContext } from '../commons/authContext'
 
 
 export default function Login(props: any) {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const { facebookLogin, login } = useContext(StateContext)
 
     return (
         <Styles.Container>
@@ -35,22 +34,14 @@ export default function Login(props: any) {
             </TouchableOpacity>
 
             <Styles.LoginBtn onPress={() => {
-                auth().signInWithEmailAndPassword(email, password).then(() => {
-                    console.log('signed in with email and password')
-                }).catch((error) => { console.log('something wrong when try to login with email and password: ', error) })
+                login(email, password);
             }}>
                 <Styles.LoginText>Entrar</Styles.LoginText>
             </Styles.LoginBtn>
 
-            <Styles.FacebookBtn onPress={() => onFacebookButtonPress()
-                .then((data) => console.log("Signed in with Facebook!"))
-                .catch((error) => {
-                    console.log("ocorreu um erro ao tentar fazer login: ", error);
-                })}>
+            <Styles.FacebookBtn onPress={() => facebookLogin()}>
                 <Styles.LoginText>Facebook</Styles.LoginText>
             </Styles.FacebookBtn>
-
-
 
             <TouchableOpacity onPress={() => {
                 props.navigation.navigate('Register')

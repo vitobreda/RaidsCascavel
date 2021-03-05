@@ -14,7 +14,6 @@ export default function Register() {
   const [friendCode, setFriendCode] = useState<string>('');
 
   function createAppUser(email: string, firebaseId: string) {
-    console.log('try to create a new user')
     let newUser = {
       userName: nickName,
       email: email,
