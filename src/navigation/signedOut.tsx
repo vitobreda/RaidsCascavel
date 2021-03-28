@@ -5,6 +5,7 @@ import Login from '../pages/login';
 import Register from '../pages/register';
 import FacebookRegister from '../pages/facebookRegister';
 
+
 const Stack = createStackNavigator();
 
 export default function Navigation() {

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { TouchableOpacity, Alert } from "react-native"
+import { TouchableOpacity } from "react-native"
 import * as Styles from '../styles/loginStyle'
 import { StateContext } from '../commons/authContext'
 
@@ -19,7 +19,6 @@ export default function Login(props: any) {
                     placeholder="Email..."
                 />
             </Styles.InputView>
-
             <Styles.InputView>
                 <Styles.InputText
                     secureTextEntry

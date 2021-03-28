@@ -2098,10 +2098,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-native@0.62.0":
-  version "0.62.0"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.62.0.tgz#d3e69ea279cd3452616933672dcaa389ca1fb15a"
-  integrity sha512-EOuX8I9XGeVOl9f9wvSGF97dwi8sOhj6fsXUsvyG3H+QW3FlOIeKwSsFyJF8KrdCOQf6idECtDRK6+AHgWKs+w==
+"@types/react-native@^0.64.2":
+  version "0.64.2"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.64.2.tgz#2e344aeec0b4eb21fb9eaa0ed8973245c5601d56"
+  integrity sha512-w2y04h+GVLY+OMlFSmq4adPuS51XtEp1yUr83OvXf+moMQ4zDG1Q07HhyvYDXdc+BSS9ANHySBqVCz0hFxli9Q==
   dependencies:
     "@types/react" "*"
 
@@ -7093,10 +7093,10 @@ react-native-unimodules@~0.12.0:
     unimodules-sensors-interface "~5.4.0"
     unimodules-task-manager-interface "~5.4.0"
 
-react-native-vector-icons@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-8.0.0.tgz#deb8b344ff68ea67f4659c8de493fef8a9e717d2"
-  integrity sha512-u3NWvO+b7nTCxx7IU4EzukFyiApHdpjbsjKgMFEI2Ma+r1Mq48s0ajvBCIPI7LCgKBGYclOxWmMV9DHV2cJFlw==
+react-native-vector-icons@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-8.1.0.tgz#e8ee2b17bc4d9f636da1c6f67feee8e2a850c3d8"
+  integrity sha512-sHIdBB6Y0dHaot2fMXgy5J/hhCn5YuyN7SKDNFgPzL8KA1oF2/v7mgYMavnK7LIIs2dJoGnDANKf61dsU+TZlg==
   dependencies:
     lodash.frompairs "^4.0.1"
     lodash.isequal "^4.5.0"
