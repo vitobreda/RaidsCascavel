@@ -3,6 +3,7 @@ import { ScrollView } from 'react-native'
 import * as Styles from '../styles/registerStyle'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import axios from "axios"
+import { constants } from "../commons/constants"
 
 export default function Register() {
   const [nickName, setNickName] = useState<string>('')
@@ -23,7 +24,7 @@ export default function Register() {
       friendCode: friendCode
     }
 
-    axios.post("http://192.168.1.11:3000/users/firebaseCreateUser", JSON.stringify(newUser), {
+    axios.post(constants.services.USER, JSON.stringify(newUser), {
       headers: { "Content-Type": 'application/json' }
     }
     )

@@ -3,6 +3,7 @@ import { ScrollView } from 'react-native'
 import * as Styles from '../styles/registerStyle'
 import { StateContext } from '../commons/authContext'
 import axios from "axios";
+import { constants } from "../commons/constants";
 
 export default function FacebookRegister(props: any) {
   const [nickName, setNickName] = useState<string>('');
@@ -22,7 +23,7 @@ export default function FacebookRegister(props: any) {
       friendCode: friendCode
     }
 
-    axios.post("http://192.168.1.11:3000/users/firebaseCreateUser", JSON.stringify(newUser), {
+    axios.post(constants.services.USER, JSON.stringify(newUser), {
       headers: { "Content-Type": 'application/json' }
     }
     )

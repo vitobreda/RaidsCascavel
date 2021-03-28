@@ -4,6 +4,7 @@ import { Alert } from 'react-native'
 import * as RootNavigation from '../navigation/rootNavigation';
 import { LoginManager, AccessToken } from "react-native-fbsdk";
 import axios from 'axios';
+import { constants } from './constants';
 
 const userInitialState = {
     email: '',
@@ -120,7 +121,7 @@ export function AuthContext(props: any) {
                 firebaseToken: firebaseToken
             }
 
-            axios.post("http://192.168.1.11:3000/users/firebaseAuthenticate", JSON.stringify(data), {
+            axios.post(constants.services.FIREBASE_AUTHENTICATE, JSON.stringify(data), {
                 headers: { "Content-Type": 'application/json' },
                 timeout: 10000
             })

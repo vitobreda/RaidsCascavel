@@ -36,7 +36,7 @@ export default function Login(props: any) {
             <Styles.LoginBtn onPress={() => {
                 login(email, password);
             }}>
-                <Styles.LoginText>Entrar</Styles.LoginText>
+                <Styles.LoginText>ENTRAR</Styles.LoginText>
             </Styles.LoginBtn>
 
             <Styles.FacebookBtn onPress={() => facebookLogin()}>
