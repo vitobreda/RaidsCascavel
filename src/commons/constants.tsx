@@ -1,6 +1,6 @@
 export const constants = {
   services: {
-    USER: "http://192.168.1.4:3000/users",
-    FIREBASE_AUTHENTICATE: "http://192.168.1.4:3000/users/firebaseAuthenticate",
+    USER: "http://127.0.0.1:3000/users",
+    FIREBASE_AUTHENTICATE: "http://127.0.0.1:3000/users/firebaseAuthenticate",
   },
 };
