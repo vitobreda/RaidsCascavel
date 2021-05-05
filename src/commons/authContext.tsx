@@ -6,30 +6,40 @@ import { LoginManager, AccessToken } from "react-native-fbsdk";
 import axios from 'axios';
 import { constants } from './constants';
 
-const userInitialState = {
-    email: '',
-    token: ''
-};
+interface IState {
+    email: string;
+    token: string;
+}
 
-export const StateContext = React.createContext({
-    user: userInitialState,
-    loginApi: (firebaseToken: string) => { },
-    facebookLogin: () => { },
-    login: (user: string, password: string) => { },
-    logOut: function () { }
-});
+interface IFunctions {
+    loginApi: (firebaseToken: string) => void,
+    facebookLogin: () => void,
+    login: (email: string, password: string) => void,
+    logOut: () => void
+}
+
+interface IContext {
+    state: IState | undefined,
+    functions: IFunctions
+}
+
+export const StateContext = React.createContext<Partial<IContext>>({});
 
 
 export function AuthContext(props: any) {
-    const [user, setUser] = useState(userInitialState);
+    const [user, setUser] = useState<IState>();
 
     useEffect(() => {
         // removed onAuthStateChanged to prevent unexpected loop
-        auth().onAuthStateChanged
-        const user = auth().currentUser;
-
-        if (user) {
-            getFirebaseToken(user)
+        try {
+            auth().onAuthStateChanged
+            const user = auth().currentUser;
+    
+            if (user) {
+                getFirebaseToken(user)
+            }
+        } catch(e) {
+            console.log('print error: ', e)
         }
     }, [])
 
@@ -66,10 +76,10 @@ export function AuthContext(props: any) {
                 })
                 .catch((err) => {
                     handlerErrorLogin(err)
-                    setUser(userInitialState)
+                    setUser(undefined)
                 });
         } else {
-            setUser(userInitialState)
+            setUser(undefined)
         }
     }
 
@@ -111,7 +121,7 @@ export function AuthContext(props: any) {
     async function logOut() {
         await LoginManager.logOut();
         auth().signOut()
-            .then(() => setUser(userInitialState))
+            .then(() => setUser(undefined))
             .catch((err) => Alert.alert('Ocorreu um erro', err.message))
     }
 
@@ -136,7 +146,15 @@ export function AuthContext(props: any) {
     }
 
     return (
-        <StateContext.Provider value={{ user, loginApi, facebookLogin, login, logOut }}>
+        <StateContext.Provider value={{
+            state: user,
+            functions: {
+                loginApi: loginApi,
+                facebookLogin: facebookLogin,
+                login: login,
+                logOut: logOut 
+            }
+        }}>
             {props.children}
         </StateContext.Provider>
     );

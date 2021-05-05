@@ -2,8 +2,7 @@ import { Text, View, TouchableOpacity, TextInput } from 'react-native';
 import styled from 'styled-components';
 
 export const Container = styled(View)`
-    flex: 1;
-    align-items: center;
+    height: 100%;
     justify-content: center;
     background-color: #394053;
 `;

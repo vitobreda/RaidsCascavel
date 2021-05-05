@@ -6,11 +6,11 @@ import SignedOut from './signedOut';
 import { navigationRef } from "./rootNavigation"
 
 export default function Navigator() {
-    const { user } = useContext(StateContext)
+    const { state } = useContext(StateContext)
 
     return (
         <NavigationContainer ref={navigationRef}>
-            {user.token !== '' ? <SignedIn /> : <SignedOut />}
+            {state ? <SignedIn /> : <SignedOut />}
         </NavigationContainer>
     );
 }
