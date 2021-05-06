@@ -2,7 +2,8 @@ import React, { useContext, useState } from 'react'
 import { TouchableOpacity, StyleSheet } from "react-native"
 import * as Styles from '../styles/loginStyle'
 import { StateContext } from '../commons/authContext'
-import { Button, TextInput } from 'react-native-paper';
+import { Button, TextInput, DarkTheme } from 'react-native-paper';
+import TextInputLogin from '../components/TextInputLogin'
 
 
 export default function Login(props: any) {
@@ -13,19 +14,10 @@ export default function Login(props: any) {
     return (
         <Styles.Container>
             <Styles.Logo>Raids Cascavel</Styles.Logo>
-            <TextInput
-                style={{
-                    marginBottom: 20,
-                    backgroundColor: "transparent",
-                    marginLeft: 20,
-                    marginRight: 20,
-                }}
-                label="Email"
-                theme={{ colors: { primary: "white", text: "red", placeholder: "yellow" } }}
-                underlineColor="white"
-                selectionColor="white"
-                placeholderTextColor="white"
-                placeholder="Digite seu email..."
+
+            <TextInputLogin
+                label="email"
+                placeholder="Email..."
                 value={email}
                 onChangeText={text => setEmail(text)}
             />
